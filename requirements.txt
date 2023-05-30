@@ -10,3 +10,4 @@ langchain==0.0.177
 openapi-schema-pydantic==1.2.4
 pydantic==1.10.7
 typing-inspect==0.8.0 
+inotify
