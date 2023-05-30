@@ -28,7 +28,7 @@ system_message = """
 bot_msg_container_html_template = '''
 <div style='background-color: #FFFFFF; padding: 10px; border-radius: 5px; margin-bottom: 10px; display: flex'>
     <div style="width: 20%; display: flex; justify-content: center">
-        <img src="https://cdn.freebiesupply.com/logos/large/2x/bitcoin-logo-svg-vector.svg" style="max-height: 50px; max-width: 50px; border-radius: 50%;">
+        <img src="https://cdn.freebiesupply.com/logos/large/2x/davidoff-goodlife-woman-logo-svg-vector.svg" style="max-height: 50px; max-width: 50px; border-radius: 50%;">
     </div>
     <div style="width: 80%;">
         $MSG
