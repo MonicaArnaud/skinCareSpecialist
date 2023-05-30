@@ -152,7 +152,7 @@ def generate_response():
         "is_user": False
     })
 # Take user input
-st.title("Glassnode Chatbot Demo")
+st.title("皮肤护理Chatbot Demo")
 
 st.text_input("Enter your prompt:",
               key="prompt",
