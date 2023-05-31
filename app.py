@@ -159,7 +159,7 @@ def generate_response():
                 response_text += content
                 
                 # Continuously render the response as it comes in
-                reply_box.markdown(get_chat_message(response_text))
+                reply_box.markdown(get_chat_message(response_text), unsafe_allow_html=True)
                 
     # Start streaming the response
     stream_response
