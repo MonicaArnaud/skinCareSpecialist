@@ -120,7 +120,8 @@ def construct_messages(history):
   
                         
 # Function to generate response
-async def generate_response(): # new version adding the async
+#async def generate_response(): # new version adding the async
+def generate_response():
     # Append user's query to history
     st.session_state.history.append({
         "message": st.session_state.prompt,
@@ -138,37 +139,37 @@ async def generate_response(): # new version adding the async
     messages = ensure_fit_tokens(messages)
     
 #     # Call the Chat Completions API with the messages
-#     response = openai.ChatCompletion.create(
-#         model="gpt-3.5-turbo",
-#         messages=messages
-#         # stream=True
-#     )
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages
+        # stream=True
+    )
  
     # add stream features -- new version
-    response_text = ""
-    async def stream_response():
-        async for chunk in await openai.ChatCompletion.acreate(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=4000,
-            # stop=NLP_MODEL_STOP_WORDS,
-            stream=True,
-            timeout=TIMEOUT,
-        ):
-            content = chunk["choices"][0].get("delta", {}).get("content", None)
-            if content is not None:
-                response_text += content
+#     response_text = ""
+#     async def stream_response():
+#         async for chunk in await openai.ChatCompletion.acreate(
+#             model="gpt-3.5-turbo",
+#             messages=messages,
+#             max_tokens=4000,
+#             # stop=NLP_MODEL_STOP_WORDS,
+#             stream=True,
+#             timeout=TIMEOUT,
+#         ):
+#             content = chunk["choices"][0].get("delta", {}).get("content", None)
+#             if content is not None:
+#                 response_text += content
                 
-                # Continuously render the response as it comes in
-                reply_box.markdown(get_chat_message(response_text), unsafe_allow_html=True)
+#                 # Continuously render the response as it comes in
+#                 reply_box.markdown(get_chat_message(response_text), unsafe_allow_html=True)
                 
     # Start streaming the response
-    await stream_response()
+    # await stream_response()
     ## --- new version ends here
     
     
     # Extract the assistant's message from the response
-    # assistant_message = response['choices'][0]['message']['content']  # Old version 
+    assistant_message = response['choices'][0]['message']['content']  # Old version 
     
     # Append assistant's message to history
     st.session_state.history.append({
@@ -180,22 +181,23 @@ async def generate_response(): # new version adding the async
 st.title("皮肤护理Chatbot Demo")
 
 # Handle prompt change asynchronously
-async def handle_prompt_change():
-    prompt = st.session_state.prompt
-    await generate_response(prompt)
+# async def handle_prompt_change():
+#     prompt = st.session_state.prompt
+#     await generate_response(prompt)
 
-input_prompt = st.text_input("请输入您的问题:",
+# input_prompt = st.text_input("请输入您的问题:",
+st.text_input("请输入您的问题:",                             
               key="prompt",
               placeholder="e.g. '皮肤角质层是什么？'",
-              # on_change= generate_response
+              on_change= generate_response
               # on_change = handle_prompt_change # new version
               )
-if "prompt" not in st.session_state:
-    st.session_state.prompt = input_prompt
-else:
-    if input_prompt != st.session_state.prompt:
-        st.session_state.prompt = input_prompt
-        asyncio.run(handle_prompt_change())  # Run the handle_prompt_change function using asyncio.run()
+# if "prompt" not in st.session_state:
+#     st.session_state.prompt = input_prompt
+# else:
+#     if input_prompt != st.session_state.prompt:
+#         st.session_state.prompt = input_prompt
+#         asyncio.run(handle_prompt_change())  # Run the handle_prompt_change function using asyncio.run()
 
 # Display chat history
 for message in st.session_state.history:
