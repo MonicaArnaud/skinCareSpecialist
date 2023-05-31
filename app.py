@@ -185,8 +185,9 @@ input_prompt = st.text_input("请输入您的问题:",
               key="prompt",
               placeholder="e.g. '皮肤角质层是什么？'",
               # on_change= generate_response
-              on_change = handle_prompt_change # new version
+              # on_change = handle_prompt_change # new version
               )
+asyncio.create_task(handle_prompt_change(input_prompt))
 
 # Display chat history
 for message in st.session_state.history:
