@@ -162,7 +162,7 @@ def generate_response():
                 reply_box.markdown(get_chat_message(response_text), unsafe_allow_html=True)
                 
     # Start streaming the response
-    stream_response
+    stream_response()
     ## --- new version ends here
     
     
