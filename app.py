@@ -181,7 +181,7 @@ st.title("皮肤护理Chatbot Demo")
 def handle_prompt_change(prompt):
     await generate_response(prompt)
 
-st.text_input("请输入您的问题:",
+input_prompt = st.text_input("请输入您的问题:",
               key="prompt",
               placeholder="e.g. '皮肤角质层是什么？'",
               # on_change= generate_response
