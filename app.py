@@ -167,7 +167,7 @@ def generate_response():
     
     
     # Extract the assistant's message from the response
-    assistant_message = response['choices'][0]['message']['content']  # Old version 
+    # assistant_message = response['choices'][0]['message']['content']  # Old version 
     
     # Append assistant's message to history
     st.session_state.history.append({
