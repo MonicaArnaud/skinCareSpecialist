@@ -9,6 +9,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 import tiktoken
 from retrying import retry
+import asyncio
 
 
 
@@ -178,7 +179,9 @@ async def generate_response(): # new version adding the async
 # Take user input
 st.title("皮肤护理Chatbot Demo")
 
-def handle_prompt_change(prompt):
+# Handle prompt change asynchronously
+async def handle_prompt_change():
+    prompt = st.session_state.prompt
     await generate_response(prompt)
 
 input_prompt = st.text_input("请输入您的问题:",
@@ -187,7 +190,12 @@ input_prompt = st.text_input("请输入您的问题:",
               # on_change= generate_response
               # on_change = handle_prompt_change # new version
               )
-asyncio.create_task(handle_prompt_change(input_prompt))
+if "prompt" not in st.session_state:
+    st.session_state.prompt = input_prompt
+else:
+    if input_prompt != st.session_state.prompt:
+        st.session_state.prompt = input_prompt
+        asyncio.run(handle_prompt_change())  # Run the handle_prompt_change function using asyncio.run()
 
 # Display chat history
 for message in st.session_state.history:
