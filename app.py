@@ -119,7 +119,7 @@ def construct_messages(history):
   
                         
 # Function to generate response
-async def generate_response():
+async def generate_response(): # new version adding the async
     # Append user's query to history
     st.session_state.history.append({
         "message": st.session_state.prompt,
@@ -178,10 +178,14 @@ async def generate_response():
 # Take user input
 st.title("皮肤护理Chatbot Demo")
 
-st.text_input("Enter your prompt:",
+def handle_prompt_change(prompt):
+    await generate_response(prompt)
+
+st.text_input("请输入您的问题:",
               key="prompt",
               placeholder="e.g. '皮肤角质层是什么？'",
-              on_change=await generate_response
+              # on_change= generate_response
+              on_change = handle_prompt_change) # new version
               )
 
 # Display chat history
