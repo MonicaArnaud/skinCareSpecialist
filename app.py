@@ -171,7 +171,8 @@ def generate_response():
     
     # Append assistant's message to history
     st.session_state.history.append({
-        "message": assistant_message,
+        # "message": assistant_message,  #old version
+        "message": response_text,
         "is_user": False
     })
 # Take user input
