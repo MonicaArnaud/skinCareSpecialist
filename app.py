@@ -137,32 +137,32 @@ def generate_response():
     messages = ensure_fit_tokens(messages)
     
 #     # Call the Chat Completions API with the messages
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-        # stream=True
-    )
+#     response = openai.ChatCompletion.create(
+#         model="gpt-3.5-turbo",
+#         messages=messages
+#         # stream=True
+#     )
  
     # add stream features -- new version
-#     response_text = ""
-#     async def stream_response():
-#         async for chunk in await openai.ChatCompletion.acreate(
-#             model="gpt-3.5-turbo",
-#             messages=messages,
-#             # max_tokens=NLP_MODEL_REPLY_MAX_TOKENS,
-#             # stop=NLP_MODEL_STOP_WORDS,
-#             stream=True,
-#             timeout=TIMEOUT,
-#         ):
-#             content = chunk["choices"][0].get("delta", {}).get("content", None)
-#             if content is not None:
-#                 response_text += content
+    response_text = ""
+    async def stream_response():
+        async for chunk in await openai.ChatCompletion.acreate(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=4000,
+            # stop=NLP_MODEL_STOP_WORDS,
+            stream=True,
+            timeout=TIMEOUT,
+        ):
+            content = chunk["choices"][0].get("delta", {}).get("content", None)
+            if content is not None:
+                response_text += content
                 
-#                 # Continuously render the response as it comes in
-#                 reply_box.markdown(get_chat_message(response_text), unsafe_allow_html=True)
+                # Continuously render the response as it comes in
+                reply_box.markdown(get_chat_message(response_text), unsafe_allow_html=True)
                 
     # Start streaming the response
-    # stream_response
+    stream_response
     ## --- new version ends here
     
     
@@ -171,8 +171,8 @@ def generate_response():
     
     # Append assistant's message to history
     st.session_state.history.append({
-        "message": assistant_message,  #old version
-        # "message": response_text,
+        # "message": assistant_message,  #old version
+        "message": response_text,
         "is_user": False
     })
 # Take user input
