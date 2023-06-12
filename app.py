@@ -164,6 +164,8 @@ def generate_response():
         "is_user": False
     })
 
+st.title("皮肤护理Chatbot Demo")
+
 # Display chat history
 for message in st.session_state.history:
     if message["is_user"]:
@@ -173,7 +175,7 @@ for message in st.session_state.history:
                             
     
 # Take user input
-st.title("皮肤护理Chatbot Demo")
+
 input_prompt = st.text_input("请输入您的问题:",                             
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
