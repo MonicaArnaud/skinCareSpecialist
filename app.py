@@ -141,16 +141,21 @@ def generate_response():
     messages = ensure_fit_tokens(messages)
     
 #     # Call the Chat Completions API with the messages
-    llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0)
+    
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         #messages=messages
-        messages = llm(messages)
+        messages = messages
     )
     
     
     # Extract the assistant's message from the response
-    assistant_message = response['choices'][0]['message']['content']  # Old version 
+    #assistant_message  = response['choices'][0]['message']['content']  # Old version 
+    assistant_message_text = response['choices'][0]['message']['content']  # New version 
+     
+    llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0) # new version
+    assistant_message = llm(assistant_message_text)
+    # new version
     
     # Append assistant's message to history
     st.session_state.history.append({
