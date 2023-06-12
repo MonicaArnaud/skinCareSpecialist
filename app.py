@@ -11,6 +11,11 @@ import tiktoken
 from retrying import retry
 import asyncio
 
+from langchain.chat_models import ChatOpenAI
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.schema import HumanMessage
+
+
 
 
 secrets = st.secrets["OPENAI_API_KEY"]
@@ -120,7 +125,6 @@ def construct_messages(history):
   
                         
 # Function to generate response
-#async def generate_response(): # new version adding the async
 def generate_response():
     # Append user's query to history
     st.session_state.history.append({
@@ -131,41 +135,18 @@ def generate_response():
     
     # Construct messages from chat history
     messages = construct_messages(st.session_state.history)
-    
-    # Add the new_message to the list of messages before sending it to the API
-    # messages.append(new_message)
+   
     
     # Ensure total tokens do not exceed model's limit
     messages = ensure_fit_tokens(messages)
     
 #     # Call the Chat Completions API with the messages
+    llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=messages
-        # stream=True
+        #messages=messages
+        messages = llm(messages)
     )
- 
-    # add stream features -- new version
-#     response_text = ""
-#     async def stream_response():
-#         async for chunk in await openai.ChatCompletion.acreate(
-#             model="gpt-3.5-turbo",
-#             messages=messages,
-#             max_tokens=4000,
-#             # stop=NLP_MODEL_STOP_WORDS,
-#             stream=True,
-#             timeout=TIMEOUT,
-#         ):
-#             content = chunk["choices"][0].get("delta", {}).get("content", None)
-#             if content is not None:
-#                 response_text += content
-                
-#                 # Continuously render the response as it comes in
-#                 reply_box.markdown(get_chat_message(response_text), unsafe_allow_html=True)
-                
-    # Start streaming the response
-    # await stream_response()
-    ## --- new version ends here
     
     
     # Extract the assistant's message from the response
@@ -180,24 +161,14 @@ def generate_response():
 # Take user input
 st.title("皮肤护理Chatbot Demo")
 
-# Handle prompt change asynchronously
-# async def handle_prompt_change():
-#     prompt = st.session_state.prompt
-#     await generate_response(prompt)
 
-# input_prompt = st.text_input("请输入您的问题:",
 st.text_input("请输入您的问题:",                             
               key="prompt",
               placeholder="e.g. '皮肤角质层是什么？'",
               on_change= generate_response
               # on_change = handle_prompt_change # new version
               )
-# if "prompt" not in st.session_state:
-#     st.session_state.prompt = input_prompt
-# else:
-#     if input_prompt != st.session_state.prompt:
-#         st.session_state.prompt = input_prompt
-#         asyncio.run(handle_prompt_change())  # Run the handle_prompt_change function using asyncio.run()
+
 
 # Display chat history
 for message in st.session_state.history:
