@@ -150,11 +150,11 @@ def generate_response():
     
     
     # Extract the assistant's message from the response
-    #assistant_message  = response['choices'][0]['message']['content']  # Old version 
-    assistant_message_text = response['choices'][0]['message']['content']  # New version 
+    assistant_message  = response['choices'][0]['message']['content']  # Old version 
+    # assistant_message_text = response['choices'][0]['message']['content']  # New version 
      
-    llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0) # new version
-    assistant_message = llm(assistant_message_text)
+    #llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0) # new version
+    # assistant_message = llm(assistant_message_text)
     # new version
     
     # Append assistant's message to history
@@ -163,17 +163,6 @@ def generate_response():
         #"message": response_text,
         "is_user": False
     })
-# Take user input
-st.title("皮肤护理Chatbot Demo")
-
-
-st.text_input("请输入您的问题:",                             
-              key="prompt",
-              placeholder="e.g. '皮肤角质层是什么？'",
-              on_change= generate_response
-              # on_change = handle_prompt_change # new version
-              )
-
 
 # Display chat history
 for message in st.session_state.history:
@@ -181,4 +170,16 @@ for message in st.session_state.history:
         st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
     else:
         st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-                        
+                            
+    
+# Take user input
+st.title("皮肤护理Chatbot Demo")
+input_prompt = st.text_input("请输入您的问题:",                             
+               key="prompt",
+               placeholder="e.g. '皮肤角质层是什么？'",
+               on_change= generate_response
+              # on_change = handle_prompt_change # new version
+              )
+
+
+
