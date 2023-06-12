@@ -176,11 +176,10 @@ for message in st.session_state.history:
     
 # Take user input
 
-input_prompt = st.text_input(" ",                             
+input_prompt = st.text_input(" 请输入您的问题 ",                             
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
-               on_change= generate_response,
-               help='<span style="color:blue; font-weight: bold">请输入您的问题</span>'             
+               on_change= generate_response          
               # on_change = handle_prompt_change # new version
               )
 
