@@ -233,8 +233,9 @@ async def generate_response():
     })
     
 def run_async_task():
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(generate_response())
+    asyncio.run(generate_response())
+#     loop = asyncio.get_event_loop()
+#     loop.run_until_complete(generate_response())
 
 
 
