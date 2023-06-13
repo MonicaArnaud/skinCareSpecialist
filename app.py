@@ -291,6 +291,6 @@ input_prompt = st.text_input(" 请输入您的问题 ",
               # on_change = handle_prompt_change # new version
               )
 
-if st.button('Generate response'):
+if st.button('生成回答'):
     run_async_task()
 
