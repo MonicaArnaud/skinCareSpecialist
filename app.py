@@ -173,7 +173,11 @@ with st.spinner("Loading vector database..."):
 vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
 
 
-def get_chat_message(message: dict[str, str]) -> None:
+def get_chat_message(
+    message: dict[str, str],
+    loading: bool = False,
+    streaming: bool = False,
+) -> None:
     role = message["role"]
     contents = message["content"]
 
