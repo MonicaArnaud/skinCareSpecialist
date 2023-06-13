@@ -173,6 +173,18 @@ with st.spinner("Loading vector database..."):
 vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
 
 
+def get_chat_message(message: dict[str, str]) -> None:
+    role = message["role"]
+    contents = message["content"]
+
+    # This is an assistant's message
+    if role == "assistant":
+        st.markdown(f"**Assistant:** {contents}")
+
+    # This is a user's message
+    elif role == "user":
+        st.markdown(f"**User:** {contents}")
+
 
 # Initiate session state for chat history
 if "history" not in st.session_state:
