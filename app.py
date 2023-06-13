@@ -217,7 +217,7 @@ async def generate_response():
         get_chat_message({
             "role": "assistant",
             "content": ""
-        }, loading=True)
+        })
     
     
     # Construct messages from chat history
