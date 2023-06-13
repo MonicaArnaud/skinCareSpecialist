@@ -146,7 +146,7 @@ def ensure_fit_tokens(messages):
 #         model="gpt-3.5-turbo",
 #         #messages=messages
 #         messages = messages
-    )
+#    )
     
     
 #     # Extract the assistant's message from the response
