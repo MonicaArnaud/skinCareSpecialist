@@ -216,10 +216,18 @@ async def generate_response():
         max_tokens=500,
         stream=True,
         temperature=0.5
+        stop = NLP_MODEl_REPLY_MAX_TOKENS,
+        stream = True,
+        timout = TIMEOUT,
     ):
         content = chunk["choices"][0].get("delta", {}).get("content", None)
         if content is not None:
             response_text += content
+            with reply_box:
+                get_chat_message({
+                    "role": "assistant",
+                    "content":content
+                }, streaming = True)
 
             # Continuously render the reply as it comes in
             st.text(response_text)
