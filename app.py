@@ -103,10 +103,76 @@ def ensure_fit_tokens(messages):
 
 
 # Load the existing persisted database from disk.
+# persist_path_full = "model/chromadb"
+# embeddings = OpenAIEmbeddings()
+# vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
+# vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
+
+# # Initiate session state for chat history
+# if "history" not in st.session_state:
+#     st.session_state.history = []
+
+# # Construct messages from chat history 
+# def construct_messages(history):
+#     messages = [{"role": "system", "content": system_message}]
+    
+#     for entry in history:
+#         role = "user" if entry["is_user"] else "assistant"
+#         messages.append({"role":role, "content": entry["message"]})
+#    # Ensure total tokens do not exceed model's limit
+#     messages = ensure_fit_tokens(messages)
+#     return messages 
+  
+                        
+# Function to generate response
+# def generate_response():
+#     # Append user's query to history
+#     st.session_state.history.append({
+#         "message": st.session_state.prompt,
+#         "is_user": True
+#     })
+    
+    
+#     # Construct messages from chat history
+#     messages = construct_messages(st.session_state.history)
+   
+    
+#     # Ensure total tokens do not exceed model's limit
+#     messages = ensure_fit_tokens(messages)
+    
+# #     # Call the Chat Completions API with the messages
+    
+#     response = openai.ChatCompletion.create(
+#         model="gpt-3.5-turbo",
+#         #messages=messages
+#         messages = messages
+    )
+    
+    
+#     # Extract the assistant's message from the response
+#     assistant_message  = response['choices'][0]['message']['content']  # Old version 
+#     # assistant_message_text = response['choices'][0]['message']['content']  # New version 
+     
+#     #llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0) # new version
+#     # assistant_message = llm(assistant_message_text)
+#     # new version
+    
+#     # Append assistant's message to history
+#     st.session_state.history.append({
+#         "message": assistant_message,  #old version
+#         #"message": response_text,
+#         "is_user": False
+#     })
+### -----------------------------------------------------### 
+
+# Load the existing persisted database from disk.
 persist_path_full = "model/chromadb"
 embeddings = OpenAIEmbeddings()
-vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
+with st.spinner("Loading vector database..."):
+    vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
 vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
+
+
 
 # Initiate session state for chat history
 if "history" not in st.session_state:
@@ -125,7 +191,8 @@ def construct_messages(history):
   
                         
 # Function to generate response
-def generate_response():
+#async def generate_response(): # new version adding the async
+async def generate_response():
     # Append user's query to history
     st.session_state.history.append({
         "message": st.session_state.prompt,
@@ -135,35 +202,44 @@ def generate_response():
     
     # Construct messages from chat history
     messages = construct_messages(st.session_state.history)
-   
+    
     
     # Ensure total tokens do not exceed model's limit
     messages = ensure_fit_tokens(messages)
     
-#     # Call the Chat Completions API with the messages
+# # Call the Chat Completions API with the messages
     
-    response = openai.ChatCompletion.create(
+    response_text = ""
+    async for chunk in await openai.ChatCompletion.acreate(
         model="gpt-3.5-turbo",
-        #messages=messages
-        messages = messages
-    )
-    
-    
-    # Extract the assistant's message from the response
-    assistant_message  = response['choices'][0]['message']['content']  # Old version 
-    # assistant_message_text = response['choices'][0]['message']['content']  # New version 
-     
-    #llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0) # new version
-    # assistant_message = llm(assistant_message_text)
-    # new version
+        messages=messages,
+        max_tokens=500,
+        stream=True,
+        temperature=0.5
+    ):
+        content = chunk["choices"][0].get("delta", {}).get("content", None)
+        if content is not None:
+            response_text += content
+
+            # Continuously render the reply as it comes in
+            st.text(response_text)
+            
     
     # Append assistant's message to history
     st.session_state.history.append({
-        "message": assistant_message,  #old version
-        #"message": response_text,
+        #"message": assistant_message,  #old version
+        "message": response_text,
         "is_user": False
     })
+    
 
+
+
+
+
+
+
+### ---------------------------------------------------### 
 st.title("皮肤护理Chatbot Demo")
 
 # Display chat history
