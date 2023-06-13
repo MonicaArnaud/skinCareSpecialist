@@ -217,7 +217,6 @@ async def generate_response():
         stream=True,
         temperature=0.5,
         stop = NLP_MODEl_REPLY_MAX_TOKENS,
-        stream = True,
         timout = TIMEOUT,
     ):
         content = chunk["choices"][0].get("delta", {}).get("content", None)
