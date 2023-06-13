@@ -14,7 +14,7 @@ import asyncio
 from langchain.chat_models import ChatOpenAI
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.schema import HumanMessage
-import markdown
+#import markdown
 
 
 
@@ -283,8 +283,8 @@ for message in st.session_state.history:
         st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
                             
 #Create a placeholder for button
-button_placeholder = st.empty()
-button_placeholder.markdonw("<p style='text-align: right;'>生成回答</p>", unsafe_allow_html=True)
+#button_placeholder = st.empty()
+#button_placeholder.markdonw("<p style='text-align: right;'>生成回答</p>", unsafe_allow_html=True)
 # Take user input
 
 input_prompt = st.text_input(" 请输入您的问题 ",                             
@@ -294,6 +294,6 @@ input_prompt = st.text_input(" 请输入您的问题 ",
               # on_change = handle_prompt_change # new version
               )
 
-if button_placeholder.button('生成回答'):
+if st.button('生成回答'):
     run_async_task()
 
