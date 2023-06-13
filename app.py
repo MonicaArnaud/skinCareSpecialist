@@ -258,8 +258,8 @@ async def generate_response():
             "is_user": False
         })
     
-  except Exception as e:
-    st.write(f"An error occurred: {e}")
+    except Exception as e:
+        st.write(f"An error occurred: {e}")
     
 def run_async_task():
     asyncio.run(generate_response())
