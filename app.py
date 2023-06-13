@@ -199,6 +199,14 @@ async def generate_response():
         "is_user": True
     })
     
+    # Create the reply box
+    reply_box = st.empty()
+    with reply_box:
+        get_chat_message({
+            "role": "assistant",
+            "content": ""
+        }, loading=True)
+    
     
     # Construct messages from chat history
     messages = construct_messages(st.session_state.history)
