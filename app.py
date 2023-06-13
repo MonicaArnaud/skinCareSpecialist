@@ -215,7 +215,7 @@ async def generate_response():
         messages=messages,
         max_tokens=500,
         stream=True,
-        temperature=0.5
+        temperature=0.5,
         stop = NLP_MODEl_REPLY_MAX_TOKENS,
         stream = True,
         timout = TIMEOUT,
