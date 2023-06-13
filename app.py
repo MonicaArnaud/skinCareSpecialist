@@ -216,7 +216,7 @@ async def generate_response():
         max_tokens=500,
         stream=True,
         temperature=0.5,
-        stop = 4000,
+        #stop = 4000,
         timout = 10,
     ):
         content = chunk["choices"][0].get("delta", {}).get("content", None)
