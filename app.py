@@ -217,7 +217,7 @@ async def generate_response():
         stream=True,
         temperature=0.5,
         #stop = 4000,
-        timout = 10,
+        #timout = 10,
     ):
         content = chunk["choices"][0].get("delta", {}).get("content", None)
         if content is not None:
