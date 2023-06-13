@@ -210,22 +210,17 @@ def construct_messages(history):
 #async def generate_response(): # new version adding the async
 async def generate_response():
     # Append user's query to history
-    st.session_state.history.append({
+    try:
+        st.session_state.history.append({
         "message": st.session_state.prompt,
         "is_user": True
     })
     
-    # Create the reply box
-    reply_box = st.empty()
-    with reply_box:
-        get_chat_message({
-            "role": "assistant",
-            "content": ""
-        })
-    
-    
     # Construct messages from chat history
     messages = construct_messages(st.session_state.history)
+    
+    # Create the reply box
+    reply_box = st.empty()
     
     
     # Ensure total tokens do not exceed model's limit
@@ -239,7 +234,7 @@ async def generate_response():
         messages=messages,
         max_tokens=500,
         stream=True,
-        temperature=0.5,
+        temperature=0.2,
         #stop = 4000,
         #timout = 10,
     ):
@@ -286,7 +281,7 @@ for message in st.session_state.history:
     
 # Take user input
 
-st.text_input(" 请输入您的问题 ",                             
+input_prompt = st.text_input(" 请输入您的问题 ",                             
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
                # on_change= generate_response    old version      
