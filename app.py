@@ -216,8 +216,8 @@ async def generate_response():
         max_tokens=500,
         stream=True,
         temperature=0.5,
-        stop = NLP_MODEl_REPLY_MAX_TOKENS,
-        timout = TIMEOUT,
+        stop = 4000,
+        timout = 10,
     ):
         content = chunk["choices"][0].get("delta", {}).get("content", None)
         if content is not None:
