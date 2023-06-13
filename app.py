@@ -217,46 +217,46 @@ async def generate_response():
     })
     
     # Construct messages from chat history
-    messages = construct_messages(st.session_state.history)
+        messages = construct_messages(st.session_state.history)
     
     # Create the reply box
-    reply_box = st.empty()
+        reply_box = st.empty()
     
     
     # Ensure total tokens do not exceed model's limit
-    messages = ensure_fit_tokens(messages)
+        messages = ensure_fit_tokens(messages)
     
 # # Call the Chat Completions API with the messages
     
-    response_text = ""
-    async for chunk in await openai.ChatCompletion.acreate(
-        model="gpt-3.5-turbo",
-        messages=messages,
-        max_tokens=500,
-        stream=True,
-        temperature=0.2,
+        response_text = ""
+        async for chunk in await openai.ChatCompletion.acreate(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=500,
+            stream=True,
+            temperature=0.2,
         #stop = 4000,
         #timout = 10,
-    ):
-        content = chunk["choices"][0].get("delta", {}).get("content", None)
-        if content is not None:
-            response_text += content
-            with reply_box:
-                get_chat_message({
-                    "role": "assistant",
-                    "content":content
-                }, streaming = True)
+     ):
+            content = chunk["choices"][0].get("delta", {}).get("content", None)
+            if content is not None:
+                response_text += content
+                with reply_box:
+                    get_chat_message({
+                        "role": "assistant",
+                        "content":response_text
+                    }, streaming = True)
 
             # Continuously render the reply as it comes in
-            st.text(response_text)
+            # st.text(response_text)
             
     
     # Append assistant's message to history
-    st.session_state.history.append({
-        #"message": assistant_message,  #old version
-        "message": response_text,
-        "is_user": False
-    })
+        st.session_state.history.append({
+            #"message": assistant_message,  #old version
+            "message": response_text,
+            "is_user": False
+        })
     
   except Exception as e:
     st.write(f"An error occurred: {e}")
