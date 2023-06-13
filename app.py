@@ -232,7 +232,9 @@ async def generate_response():
         "is_user": False
     })
     
-
+def run_async_task():
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(generate_response())
 
 
 
@@ -252,12 +254,13 @@ for message in st.session_state.history:
     
 # Take user input
 
-input_prompt = st.text_input(" 请输入您的问题 ",                             
+st.text_input(" 请输入您的问题 ",                             
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
-               on_change= generate_response          
+               # on_change= generate_response    old version      
               # on_change = handle_prompt_change # new version
               )
 
-
+if st.button('Generate response'):
+    run_async_task()
 
