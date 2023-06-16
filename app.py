@@ -297,11 +297,15 @@ for message in st.session_state.history:
 #                # on_change= generate_response    old version      
 #               )
 
+input_prompt = st.text_input("请输入您的问题",
+                             value="",
+                             key="prompt",
+                             placeholder="e.g. '皮肤角质层是什么？'")
+
 if input_prompt:
-    if st.text_input(" 请输入您的问题 ", 
+    if st.text_input(" 请回车提交问题 ", 
                  key="enter_key",
                  value = input_prompt,
-                 placeholder="e.g. '皮肤角质层是什么？'",
                  on_change=lambda value: asyncio.run(generate_response())) == "":
                      # Clear the input prompt if the user pressed enter
                         input_prompt = ""
