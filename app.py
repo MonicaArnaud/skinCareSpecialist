@@ -261,7 +261,7 @@ async def generate_response():
         })
 
        # Clear the input box
-        st.session_state.prompt = ""
+        st.session_state.prompt_cleared = True
 
        # Trigger app rerun to display the new assistant message and clear the input box
         st.experimental_rerun()
@@ -300,4 +300,11 @@ input_prompt = st.text_input(" 请输入您的问题 ",
 # if st.button('生成回答'): old version
 if input_prompt:
     run_async_task()
+
+# New version
+# Clear the input prompt if the prompt_cleared flag is True
+if st.session_state.prompt_cleared:
+    st.session_state.prompt = ""
+    st.session_state.prompt_cleared = False
+
 
