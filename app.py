@@ -290,28 +290,25 @@ for message in st.session_state.history:
 #button_placeholder.markdonw("<p style='text-align: right;'>生成回答</p>", unsafe_allow_html=True)
 # Take user input
 
-input_prompt = st.text_input(" 请输入您的问题 ", 
-               value = "",
-               key="prompt",
-               placeholder="e.g. '皮肤角质层是什么？'",
-              )
-if input_prompt:
-    run_async_task()
-    input_prompt = ""  # Clear the input prompt
-
-# input_prompt = st.text_input("请输入您的问题",
-#                              value="",
-#                              key="prompt",
-#                              placeholder="e.g. '皮肤角质层是什么？'")
-
-# if input_prompt:
-#     if st.form_submit_button("Press enter to submit your question"):
-#         asyncio.run(generate_response(input_prompt))
-       # input_prompt = ""  # Clear the input prompt
-
-# if st.button('生成回答'): old version
+# input_prompt = st.text_input(" 请输入您的问题 ", 
+#                value = "",
+#                key="prompt",
+#                placeholder="e.g. '皮肤角质层是什么？'",
+#               )
 # if input_prompt:
 #     run_async_task()
+
+input_placeholder = st.empty()
+input_prompt = input_placeholder.text_input(
+    "请输入您的问题",
+    value="",
+    key="prompt",
+    placeholder="e.g. '皮肤角质层是什么？'"
+)
+
+if input_prompt:
+    run_async_task()
+    input_placeholder.text_input("请输入您的问题", value="", key="prompt", placeholder="e.g. '皮肤角质层是什么？'")
 
 
 
