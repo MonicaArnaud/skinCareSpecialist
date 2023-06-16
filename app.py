@@ -299,17 +299,38 @@ for message in st.session_state.history:
 #     run_async_task()
 
 # Create a text input box for user input
-while True:
-    input_prompt = st.text_input(" 请输入您的问题 ", 
+# while True:
+#     input_prompt = st.text_input(" 请输入您的问题 ", 
+#                value = "",
+#                key="prompt",
+#                placeholder="e.g. '皮肤角质层是什么？'",
+#               )
+#     if input_prompt:
+#         run_async_task()
+#         st.session_state.prompt = ""
+#         st.experimental_rerun()
+#         break
+
+# Placeholders for input and button
+input_placeholder = st.empty()
+button_placeholder = st.empty()
+
+# Create a text input box for user input
+input_prompt = input_placeholder.text_input(" 请输入您的问题 ", 
                value = "",
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
               )
-    if input_prompt:
-        run_async_task()
-        st.session_state.prompt = ""
-        st.experimental_rerun()
-        break
+
+# Create a button for user to press when they finish typing
+if button_placeholder.button("Submit"):
+    run_async_task()
+    input_placeholder.text_input(" 请输入您的问题 ", 
+               value = "",
+               key="prompt",
+               placeholder="e.g. '皮肤角质层是什么？'",
+              )
+
 
 
 
