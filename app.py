@@ -290,21 +290,26 @@ for message in st.session_state.history:
 #button_placeholder.markdonw("<p style='text-align: right;'>生成回答</p>", unsafe_allow_html=True)
 # Take user input
 
-input_prompt = st.text_input(" 请输入您的问题 ", 
-               value = "",
-               key="prompt",
-               placeholder="e.g. '皮肤角质层是什么？'",
-               # on_change= generate_response    old version      
-              )
+# input_prompt = st.text_input(" 请输入您的问题 ", 
+#                value = "",
+#                key="prompt",
+#                placeholder="e.g. '皮肤角质层是什么？'",
+#                # on_change= generate_response    old version      
+#               )
+
+if input_prompt:
+    if st.text_input(" 请输入您的问题 ", 
+                 value = "",
+                 key="enter_key",
+                 value = input_prompt,
+                 placeholder="e.g. '皮肤角质层是什么？'",
+                 on_change=lambda value: asyncio.run(generate_response())) == "":
+                     # Clear the input prompt if the user pressed enter
+                        input_prompt = ""
 
 # if st.button('生成回答'): old version
-if input_prompt:
-    run_async_task()
+# if input_prompt:
+#     run_async_task()
 
-# New version
-# Clear the input prompt if the prompt_cleared flag is True
-# if st.session_state.prompt_cleared:
-#     st.session_state.prompt = ""
-#     st.session_state.prompt_cleared = False
 
 
