@@ -290,13 +290,13 @@ for message in st.session_state.history:
 #button_placeholder.markdonw("<p style='text-align: right;'>生成回答</p>", unsafe_allow_html=True)
 # Take user input
 
-# input_prompt = st.text_input(" 请输入您的问题 ", 
-#                value = "",
-#                key="prompt",
-#                placeholder="e.g. '皮肤角质层是什么？'",
-#               )
-# if input_prompt:
-#     run_async_task()
+input_prompt = st.text_input(" 请输入您的问题 ", 
+               value = "",
+               key="prompt",
+               placeholder="e.g. '皮肤角质层是什么？'",
+              )
+if input_prompt:
+    run_async_task()
 
 # Create a text input box for user input
 # while True:
@@ -312,24 +312,24 @@ for message in st.session_state.history:
 #         break
 
 # Placeholders for input and button
-input_placeholder = st.empty()
-button_placeholder = st.empty()
+# input_placeholder = st.empty()
+# button_placeholder = st.empty()
 
-# Create a text input box for user input
-input_prompt = input_placeholder.text_input(" 请输入您的问题 ", 
-               value = "",
-               key="prompt",
-               placeholder="e.g. '皮肤角质层是什么？'",
-              )
+# # Create a text input box for user input
+# input_prompt = input_placeholder.text_input(" 请输入您的问题 ", 
+#                value = "",
+#                key="prompt",
+#                placeholder="e.g. '皮肤角质层是什么？'",
+#               )
 
-# Create a button for user to press when they finish typing
-if button_placeholder.button("Submit"):
-    run_async_task()
-    input_placeholder.text_input(" 请输入您的问题 ", 
-               value = "",
-               key="prompt",
-               placeholder="e.g. '皮肤角质层是什么？'",
-              )
+# # Create a button for user to press when they finish typing
+# if button_placeholder.button("Submit"):
+#     run_async_task()
+#     input_placeholder.text_input(" 请输入您的问题 ", 
+#                value = "",
+#                key="prompt",
+#                placeholder="e.g. '皮肤角质层是什么？'",
+#               )
 
 
 
