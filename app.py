@@ -256,8 +256,8 @@ async def generate_response():
         st.session_state.history.append({
             #"message": assistant_message,  #old version
             "message": response_text,
-            "is_user": False,
-            "timestamp": time.time() # append chat history by time
+            "is_user": False
+            # "timestamp": time.time() # append chat history by time
         })
     
     except Exception as e:
@@ -272,8 +272,8 @@ def run_async_task():
 st.title("皮肤护理Chatbot Demo")
 
 # Display chat history in ascending time order
-for message in sorted(st.session_state.history, key=lambda x: x["timestamp"]):
-#for message in st.session_state.history:
+# for message in sorted(st.session_state.history, key=lambda x: x["timestamp"]):
+for message in st.session_state.history:
     if message["is_user"]:
         st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
     else:
