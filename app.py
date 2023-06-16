@@ -287,8 +287,10 @@ for message in st.session_state.history:
 #button_placeholder.markdonw("<p style='text-align: right;'>生成回答</p>", unsafe_allow_html=True)
 # Take user input
 
-input_prompt = st.text_input(" 请输入您的问题 ",                             
+input_prompt = st.text_input(" 请输入您的问题 ", 
+               value = "",
                key="prompt",
+               help="点击下方的生成回答按钮",
                placeholder="e.g. '皮肤角质层是什么？'",
                # on_change= generate_response    old version      
               # on_change = handle_prompt_change # new version
