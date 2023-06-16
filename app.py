@@ -261,10 +261,10 @@ async def generate_response():
         })
 
        # Clear the input box
-        st.session_state.prompt_cleared = True
+        #st.session_state.prompt_cleared = True
 
        # Trigger app rerun to display the new assistant message and clear the input box
-        st.experimental_rerun()
+        #st.experimental_rerun()
     
     except Exception as e:
         st.write(f"An error occurred: {e}")
@@ -303,8 +303,8 @@ if input_prompt:
 
 # New version
 # Clear the input prompt if the prompt_cleared flag is True
-if st.session_state.prompt_cleared:
-    st.session_state.prompt = ""
-    st.session_state.prompt_cleared = False
+# if st.session_state.prompt_cleared:
+#     st.session_state.prompt = ""
+#     st.session_state.prompt_cleared = False
 
 
