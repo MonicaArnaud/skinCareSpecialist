@@ -303,12 +303,9 @@ input_prompt = st.text_input("请输入您的问题",
                              placeholder="e.g. '皮肤角质层是什么？'")
 
 if input_prompt:
-    if st.text_input(" 请回车提交问题 ", 
-                 key="enter_key",
-                 value = input_prompt,
-                 on_change=lambda value: asyncio.run(generate_response(value))) == "":
-                     # Clear the input prompt if the user pressed enter
-                        input_prompt = ""
+    if st.form_submit_button("Press enter to submit your question"):
+        asyncio.run(generate_response(input_prompt))
+        input_prompt = ""  # Clear the input prompt
 
 # if st.button('生成回答'): old version
 # if input_prompt:
