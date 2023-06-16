@@ -264,11 +264,6 @@ async def generate_response():
     
 def run_async_task():
     asyncio.run(generate_response())
-#     loop = asyncio.get_event_loop()
-#     loop.run_until_complete(generate_response())
-
-
-
 
 
 
@@ -292,9 +287,9 @@ input_prompt = st.text_input(" 请输入您的问题 ",
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
                # on_change= generate_response    old version      
-              # on_change = handle_prompt_change # new version
               )
 
-if st.button('生成回答'):
+# if st.button('生成回答'): old version
+if input_prompt:
     run_async_task()
 
