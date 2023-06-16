@@ -299,7 +299,6 @@ for message in st.session_state.history:
 
 if input_prompt:
     if st.text_input(" 请输入您的问题 ", 
-                 value = "",
                  key="enter_key",
                  value = input_prompt,
                  placeholder="e.g. '皮肤角质层是什么？'",
