@@ -306,7 +306,7 @@ if input_prompt:
     if st.text_input(" 请回车提交问题 ", 
                  key="enter_key",
                  value = input_prompt,
-                 on_change=lambda value: asyncio.run(generate_response())) == "":
+                 on_change=lambda value: asyncio.run(generate_response(value))) == "":
                      # Clear the input prompt if the user pressed enter
                         input_prompt = ""
 
