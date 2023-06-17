@@ -102,68 +102,6 @@ def ensure_fit_tokens(messages):
         total_tokens = num_tokens_from_messages(messages)
     return messages
 
-
-# Load the existing persisted database from disk.
-# persist_path_full = "model/chromadb"
-# embeddings = OpenAIEmbeddings()
-# vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
-# vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
-
-# # Initiate session state for chat history
-# if "history" not in st.session_state:
-#     st.session_state.history = []
-
-# # Construct messages from chat history 
-# def construct_messages(history):
-#     messages = [{"role": "system", "content": system_message}]
-    
-#     for entry in history:
-#         role = "user" if entry["is_user"] else "assistant"
-#         messages.append({"role":role, "content": entry["message"]})
-#    # Ensure total tokens do not exceed model's limit
-#     messages = ensure_fit_tokens(messages)
-#     return messages 
-  
-                        
-# Function to generate response
-# def generate_response():
-#     # Append user's query to history
-#     st.session_state.history.append({
-#         "message": st.session_state.prompt,
-#         "is_user": True
-#     })
-    
-    
-#     # Construct messages from chat history
-#     messages = construct_messages(st.session_state.history)
-   
-    
-#     # Ensure total tokens do not exceed model's limit
-#     messages = ensure_fit_tokens(messages)
-    
-# #     # Call the Chat Completions API with the messages
-    
-#     response = openai.ChatCompletion.create(
-#         model="gpt-3.5-turbo",
-#         #messages=messages
-#         messages = messages
-#    )
-    
-    
-#     # Extract the assistant's message from the response
-#     assistant_message  = response['choices'][0]['message']['content']  # Old version 
-#     # assistant_message_text = response['choices'][0]['message']['content']  # New version 
-     
-#     #llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0) # new version
-#     # assistant_message = llm(assistant_message_text)
-#     # new version
-    
-#     # Append assistant's message to history
-#     st.session_state.history.append({
-#         "message": assistant_message,  #old version
-#         #"message": response_text,
-#         "is_user": False
-#     })
 ### -----------------------------------------------------### 
 
 # Load the existing persisted database from disk.
@@ -297,41 +235,6 @@ input_prompt = st.text_input(" 请输入您的问题 ",
               )
 if input_prompt:
     run_async_task()
-
-# Create a text input box for user input
-# while True:
-#     input_prompt = st.text_input(" 请输入您的问题 ", 
-#                value = "",
-#                key="prompt",
-#                placeholder="e.g. '皮肤角质层是什么？'",
-#               )
-#     if input_prompt:
-#         run_async_task()
-#         st.session_state.prompt = ""
-#         st.experimental_rerun()
-#         break
-
-# Placeholders for input and button
-# input_placeholder = st.empty()
-# button_placeholder = st.empty()
-
-# # Create a text input box for user input
-# input_prompt = input_placeholder.text_input(" 请输入您的问题 ", 
-#                value = "",
-#                key="prompt",
-#                placeholder="e.g. '皮肤角质层是什么？'",
-#               )
-
-# # Create a button for user to press when they finish typing
-# if button_placeholder.button("Submit"):
-#     run_async_task()
-#     input_placeholder.text_input(" 请输入您的问题 ", 
-#                value = "",
-#                key="prompt",
-#                placeholder="e.g. '皮肤角质层是什么？'",
-#               )
-
-
 
 
 
