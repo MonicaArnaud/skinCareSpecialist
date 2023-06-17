@@ -195,14 +195,8 @@ async def generate_response():
             #"message": assistant_message,  #old version
             "message": response_text,
             "is_user": False
-            # "timestamp": time.time() # append chat history by time
         })
 
-       # Clear the input box
-        #st.session_state.prompt_cleared = True
-
-       # Trigger app rerun to display the new assistant message and clear the input box
-        #st.experimental_rerun()
     
     except Exception as e:
         st.write(f"An error occurred: {e}")
@@ -216,17 +210,12 @@ def run_async_task():
 st.title("皮肤护理Chatbot Demo")
 
 # Display chat history in ascending time order
-# for message in sorted(st.session_state.history, key=lambda x: x["timestamp"]):
 for message in st.session_state.history:
     if message["is_user"]:
         st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
     else:
         st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
                             
-#Create a placeholder for button
-#button_placeholder = st.empty()
-#button_placeholder.markdonw("<p style='text-align: right;'>生成回答</p>", unsafe_allow_html=True)
-# Take user input
 
 input_prompt = st.text_input(" 请输入您的问题 ", 
                value = "",
