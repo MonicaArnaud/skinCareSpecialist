@@ -186,8 +186,6 @@ async def generate_response():
                         "content":response_text
                     }, streaming = True)
 
-            # Continuously render the reply as it comes in
-            # st.text(response_text)
             
     
     # Append assistant's message to history
