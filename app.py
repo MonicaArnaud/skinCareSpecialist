@@ -173,7 +173,7 @@ async def generate_response():
             messages=messages,
             max_tokens=500,
             stream=True,
-            temperature=0.2,
+            temperature=0.1,
         #stop = 4000,
         #timout = 10,
      ):
