@@ -10,6 +10,7 @@ from langchain.vectorstores import Chroma
 import tiktoken
 from retrying import retry
 import asyncio
+import chromadb
 
 from langchain.chat_models import ChatOpenAI
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
