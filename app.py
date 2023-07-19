@@ -105,10 +105,17 @@ def ensure_fit_tokens(messages):
 ### -----------------------------------------------------### 
 
 # Load the existing persisted database from disk.
-persist_path_full = "model/chromadb"
+# persist_path_full = "model/chromadb"
+# embeddings = OpenAIEmbeddings()
+# with st.spinner("Loading vector database..."):
+#     vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
+# vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
+
+# updated chromadb code 
+client = chromadb.PersistentClient(path="model/chromadb")
 embeddings = OpenAIEmbeddings()
 with st.spinner("Loading vector database..."):
-    vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
+    vectordb = Chroma(client = client, embedding_function=embeddings)
 vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
 
 
