@@ -232,9 +232,9 @@ if st.button("重新生成回答"):
     # Rerun the conversation with the last user input
     run_async_task()
 
-if st.button("继续回答"):
-    # Continue the conversation with the last assistant's message
-    run_async_task()
+# if st.button("继续回答"):
+#     # Continue the conversation with the last assistant's message
+#     run_async_task()
 
 input_prompt = st.text_input(" 请输入您的问题 ", 
                value = "",
