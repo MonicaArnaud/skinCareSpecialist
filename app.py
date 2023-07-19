@@ -15,6 +15,7 @@ import chromadb
 from langchain.chat_models import ChatOpenAI
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.schema import HumanMessage
+import streamlit.components.v1 as components
 #import markdown
 
 
@@ -66,6 +67,8 @@ def render_chat(**kwargs):
         st.write(
             bot_msg_container_html_template.replace("$MSG", kwargs["message"]),
             unsafe_allow_html=True)
+        # Add copy to clipboard button after assistant's message
+        copy_to_clipboard(f'copy_{len(st.session_state.history)}', kwargs["message"])
 
     if "figs" in kwargs:
         for f in kwargs["figs"]:
@@ -213,23 +216,23 @@ def run_async_task():
 
 
 ### ---------------------------------------------------### 
-# st.title("皮肤护理Chatbot Demo")
+st.title("皮肤护理Chatbot Demo")
 
-# # Display chat history in ascending time order
-# for message in st.session_state.history:
-#     if message["is_user"]:
-#         st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-#     else:
-#         st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
+# Display chat history in ascending time order
+for message in st.session_state.history:
+    if message["is_user"]:
+        st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
+    else:
+        st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
                             
 
-# input_prompt = st.text_input(" 请输入您的问题 ", 
-#                value = "",
-#                key="prompt",
-#                placeholder="e.g. '皮肤角质层是什么？'",
-#               )
-# if input_prompt:
-#     run_async_task()
+input_prompt = st.text_input(" 请输入您的问题 ", 
+               value = "",
+               key="prompt",
+               placeholder="e.g. '皮肤角质层是什么？'",
+              )
+if input_prompt:
+    run_async_task()
 
 # new code to fix the input box
 
@@ -238,30 +241,30 @@ def run_async_task():
 #     st.write("\n")
 
 
-chat_column, input_column = st.columns([20, 2])
+# chat_column, input_column = st.columns([20, 2])
 
-with chat_column:
-    st.title("皮肤护理Chatbot Demo")
-    for message in st.session_state.history:
-        if message["is_user"]:
-            st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-        else:
-            st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-    empty_slot = st.empty()
+# with chat_column:
+#     st.title("皮肤护理Chatbot Demo")
+#     for message in st.session_state.history:
+#         if message["is_user"]:
+#             st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
+#         else:
+#             st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
+#     empty_slot = st.empty()
 
 
 
-with input_column:
-    input_prompt = st.text_input(" 请输入您的问题 ",
-                    value = "",
-                    key="prompt",
-                    placeholder="e.g. '皮肤角质层是什么？'",
-                )
-    if input_prompt:
-        run_async_task()
+# with input_column:
+#     input_prompt = st.text_input(" 请输入您的问题 ",
+#                     value = "",
+#                     key="prompt",
+#                     placeholder="e.g. '皮肤角质层是什么？'",
+#                 )
+#     if input_prompt:
+#         run_async_task()
 
-with chat_column:
-    empty_slot.text('')
+# with chat_column:
+#     empty_slot.text('')
 
 
 
