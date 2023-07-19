@@ -224,7 +224,17 @@ for message in st.session_state.history:
         st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
     else:
         st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-                            
+
+# Add regenerate and continue generate buttons
+if st.button("重新生成回答"):
+    # Remove the last assistant's message
+    st.session_state.history = st.session_state.history[:-1]
+    # Rerun the conversation with the last user input
+    run_async_task()
+
+if st.button("继续回答"):
+    # Continue the conversation with the last assistant's message
+    run_async_task()
 
 input_prompt = st.text_input(" 请输入您的问题 ", 
                value = "",
