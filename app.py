@@ -232,7 +232,7 @@ def run_async_task():
 #     run_async_task()
 
 # new code to fix the input box
-chat_column, input_column = st.beta_columns([15, 2])
+chat_column, input_column = st.columns([15, 2])
 
 with chat_column:
     st.title("皮肤护理Chatbot Demo")
