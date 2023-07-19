@@ -5,6 +5,7 @@ openpyxl
 tiktoken==0.4.0
 retrying==1.3.4
 chromadb
+chroma-migrate
 nest_asyncio
 typing_extensions==4.6.0
 langchain==0.0.177
