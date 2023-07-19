@@ -235,7 +235,7 @@ def run_async_task():
 
 # Create empty space above the input box
 for _ in range(100):  # Adjust the range value to create more or less space
-    input_column.write("")
+    st.write("\n")
 
 
 chat_column, input_column = st.columns([8, 2])
