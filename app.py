@@ -232,7 +232,13 @@ def run_async_task():
 #     run_async_task()
 
 # new code to fix the input box
-chat_column, input_column = st.columns([15, 2])
+
+# Create empty space above the input box
+for _ in range(100):  # Adjust the range value to create more or less space
+    input_column.write("")
+
+
+chat_column, input_column = st.columns([8, 2])
 
 with chat_column:
     st.title("皮肤护理Chatbot Demo")
@@ -243,9 +249,7 @@ with chat_column:
             st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
     empty_slot = st.empty()
 
-# Create empty space above the input box
-for _ in range(10):  # Adjust the range value to create more or less space
-    input_column.write("")
+
 
 with input_column:
     input_prompt = st.text_input(" 请输入您的问题 ",
