@@ -230,15 +230,16 @@ for message in st.session_state.history:
 if "regenerate" not in st.session_state:
     st.session_state.regenerate = False
 
+# Add regenerate button
 if st.button("重新生成回答"):
-   if not st.session_state.regenerate:
+    if not st.session_state.regenerate:
         # Set the regenerate state to True
         st.session_state.regenerate = True
         # Remove the last assistant's message
         st.session_state.history = st.session_state.history[:-1]
         # Rerun the conversation with the last user input
         run_async_task()
-  else:
+    else:
         # Reset the regenerate state to False
         st.session_state.regenerate = False
 
