@@ -227,11 +227,20 @@ for message in st.session_state.history:
         st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
 
 # Add regenerate and continue generate buttons
+if "regenerate" not in st.session_state:
+    st.session_state.regenerate = False
+
 if st.button("重新生成回答"):
-    # Remove the last assistant's message
-    st.session_state.history = st.session_state.history[:-1]
-    # Rerun the conversation with the last user input
-    run_async_task()
+   if not st.session_state.regenerate:
+        # Set the regenerate state to True
+        st.session_state.regenerate = True
+        # Remove the last assistant's message
+        st.session_state.history = st.session_state.history[:-1]
+        # Rerun the conversation with the last user input
+        run_async_task()
+    else:
+        # Reset the regenerate state to False
+        st.session_state.regenerate = False
 
 # if st.button("继续回答"):
 #     # Continue the conversation with the last assistant's message
