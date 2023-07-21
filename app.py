@@ -238,7 +238,7 @@ if st.button("重新生成回答"):
         st.session_state.history = st.session_state.history[:-1]
         # Rerun the conversation with the last user input
         run_async_task()
-    else:
+  else:
         # Reset the regenerate state to False
         st.session_state.regenerate = False
 
