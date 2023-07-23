@@ -256,6 +256,7 @@ def main():
     In your answers, speak confidently as if you were simply speaking from your own knowledge.
     Don’t justify your answers. Don’t give information not mentioned in the CONTEXT INFORMATION.
             """
+        }
         st.session_state['messages'].append(initial_message)
     # 新增内容结束，如果要删除这些代码，原来的代码请别忘记删除缩进。
 
