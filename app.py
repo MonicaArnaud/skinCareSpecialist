@@ -161,11 +161,12 @@ def find_related_documents(query):
     # Here, we assume you have set up Chroma with your document database
     # and loaded the embeddings. Adjust the retrieval parameters as needed.
     # For example, the 'k' parameter controls the number of documents retrieved.
-    docs_with_scores_and_content_texts = client.get_related_documents(
-        query, k=3)
-
+    
+    docs_with_scores_and_content_texts = vectordb.similarity_search_with_score(query)[:3]
+    
     # Return the content of the top 3 related documents
     return [doc.page_content for doc, _ in docs_with_scores_and_content_texts]
+    
 # 新增结束
 
 # Function to generate response
