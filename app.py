@@ -294,6 +294,9 @@ def main():
                placeholder="e.g. '皮肤角质层是什么？'",
               )
     if input_prompt:
+        #新增
+        st.session_state.prompt = input_prompt
+        # 新增结束
         run_async_task()
 
 if __name__ == "__main__":
