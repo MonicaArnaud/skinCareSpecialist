@@ -161,7 +161,7 @@ def find_related_documents(query):
     # Here, we assume you have set up Chroma with your document database
     # and loaded the embeddings. Adjust the retrieval parameters as needed.
     # For example, the 'k' parameter controls the number of documents retrieved.
-    docs_with_scores_and_content_texts = client.retrieval.similarity_search_with_score(
+    docs_with_scores_and_content_texts = client.get_related_documents(
         query, k=3)
 
     # Return the content of the top 3 related documents
