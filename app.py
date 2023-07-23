@@ -237,14 +237,28 @@ def run_async_task():
 
 
 ### ---------------------------------------------------### 
-st.title("皮肤护理Chatbot Demo")
+# 新增
+def main():
+    
+    st.title("皮肤护理Chatbot Demo")
+    # 下面也是新增的内容
+    if 'messages' not in st.session_state:
+        st.session_state['messages'] = []
+
+        initial_message ={
+            "role": "system",
+            "content": "You are a smart information retrieval AI. Below you will see questions from user, and several related items for the question. Based on the documents, answer the question. If you cannot answer the question based on the documents, just say you don't know. Don't try to make up answers."
+            }
+
+        st.session_state['messages'].append(initial_message)
+    # 新增内容结束，如果要删除这些代码，原来的代码请别忘记删除缩进。
 
 # Display chat history in ascending time order
-for message in st.session_state.history:
-    if message["is_user"]:
-        st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-    else:
-        st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
+    for message in st.session_state.history:
+        if message["is_user"]:
+            st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
+        else:
+            st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
 
 # Add regenerate and continue generate buttons
 # if "regenerate" not in st.session_state:
@@ -267,14 +281,16 @@ for message in st.session_state.history:
 #     # Continue the conversation with the last assistant's message
 #     run_async_task()
 
-input_prompt = st.text_input(" 请输入您的问题 ", 
+    input_prompt = st.text_input(" 请输入您的问题 ", 
                value = "",
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
               )
-if input_prompt:
-    run_async_task()
+    if input_prompt:
+        run_async_task()
 
+if __name__ == "__main__":
+    main()
 # new code to fix the input box
 
 # Create empty space above the input box
