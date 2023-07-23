@@ -155,8 +155,11 @@ def construct_messages(history):
    # Ensure total tokens do not exceed model's limit
     messages = ensure_fit_tokens(messages)
     return messages 
-  
-                        
+# 新增开始
+def find_related_documents(query):
+    document_db = vectordb.similarity_search_with_score(query)[:3]
+    return document_db[:3]
+# 新增结束
 # Function to generate response
 #async def generate_response(): # new version adding the async
 async def generate_response():
@@ -176,6 +179,14 @@ async def generate_response():
     
     # Ensure total tokens do not exceed model's limit
         messages = ensure_fit_tokens(messages)
+
+    # Get related documents based on user input # 新增
+        related_documents = find_related_documents(st.session_state.prompt)
+
+        # Add related document messages to the chat
+        doc_messages = [{"role": "assistant", "content": doc_text} for doc_text in related_documents]
+        st.session_state["messages"].extend(doc_messages)
+    # 新增结束
     
 # # Call the Chat Completions API with the messages
     
