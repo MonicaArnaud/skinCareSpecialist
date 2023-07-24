@@ -109,13 +109,6 @@ def ensure_fit_tokens(messages):
 
 ### -----------------------------------------------------### 
 
-# Load the existing persisted database from disk.
-# persist_path_full = "model/chromadb"
-# embeddings = OpenAIEmbeddings()
-# with st.spinner("Loading vector database..."):
-#     vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
-# vectordb_retriver = vectordb.as_retriever(search_kwargs={"k":3})
-
 # updated chromadb code 
 client = chromadb.PersistentClient(path="model/chromadb")
 embeddings = OpenAIEmbeddings()
@@ -155,7 +148,8 @@ def construct_messages(history):
    # Ensure total tokens do not exceed model's limit
     messages = ensure_fit_tokens(messages)
     return messages 
-# 新增开始
+
+
 def find_related_documents(query):
     # Search for documents related to the user query using Chroma
     # Here, we assume you have set up Chroma with your document database
@@ -169,10 +163,9 @@ def find_related_documents(query):
 
 def run_async_task():
     asyncio.run(generate_response())
-# 新增结束
+
 
 # Function to generate response
-#async def generate_response(): # new version adding the async
 async def generate_response():
     input_prompt = st.session_state.prompt
     
@@ -195,7 +188,6 @@ async def generate_response():
         messages = ensure_fit_tokens(messages)
 
     # Get related documents based on user input # 新增
-        # related_documents = find_related_documents(st.session_state.prompt)
         related_documents = find_related_documents(input_prompt)
 
         if not related_documents:
@@ -207,7 +199,7 @@ async def generate_response():
         # Add related document messages to the chat
         doc_messages = [{"role": "assistant", "content": doc_text} for doc_text in related_documents]
         messages.extend(doc_messages)
-    # 新增结束
+
     
 # # Call the Chat Completions API with the messages
     
@@ -249,11 +241,10 @@ def run_async_task():
 
 
 ### ---------------------------------------------------### 
-# 新增
+
 def main():
     
     st.title("皮肤护理Chatbot Demo")
-    # 下面也是新增的内容
     if 'messages' not in st.session_state:
         st.session_state['messages'] = []
 
@@ -270,7 +261,7 @@ def main():
             """
         }
         st.session_state['messages'].append(initial_message)
-    # 新增内容结束，如果要删除这些代码，原来的代码请别忘记删除缩进。
+   
 
 # Display chat history in ascending time order
     for message in st.session_state.history:
@@ -279,71 +270,15 @@ def main():
         else:
             st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
 
-# Add regenerate and continue generate buttons
-# if "regenerate" not in st.session_state:
-#     st.session_state.regenerate = False
-
-# # If regenerate button is clicked, toggle the regenerate state
-# if st.button("重新生成回答"):
-#     st.session_state.regenerate = not st.session_state.regenerate
-
-# # If regenerate state is True, remove the last assistant's message and rerun the conversation
-# if st.session_state.regenerate:
-#     # Remove the last assistant's message
-#     st.session_state.history = st.session_state.history[:-1]
-#     # Rerun the conversation with the last user input
-#     run_async_task()
-#     # Reset the regenerate state to False
-#     st.session_state.regenerate = False
-
-# if st.button("继续回答"):
-#     # Continue the conversation with the last assistant's message
-#     run_async_task()
-
     input_prompt = st.text_input(" 请输入您的问题 ", 
                value = "",
                key="prompt",
                placeholder="e.g. '皮肤角质层是什么？'",
               )
     if input_prompt:
-        #新增
-        # st.session_state.prompt = input_prompt
-        # 新增结束
         run_async_task()
 
 if __name__ == "__main__":
     main()
-# new code to fix the input box
-
-# Create empty space above the input box
-# for _ in range(100):  # Adjust the range value to create more or less space
-#     st.write("\n")
-
-
-# chat_column, input_column = st.columns([20, 2])
-
-# with chat_column:
-#     st.title("皮肤护理Chatbot Demo")
-#     for message in st.session_state.history:
-#         if message["is_user"]:
-#             st.write(user_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-#         else:
-#             st.write(bot_msg_container_html_template.replace("$MSG", message["message"]), unsafe_allow_html=True)
-#     empty_slot = st.empty()
-
-
-
-# with input_column:
-#     input_prompt = st.text_input(" 请输入您的问题 ",
-#                     value = "",
-#                     key="prompt",
-#                     placeholder="e.g. '皮肤角质层是什么？'",
-#                 )
-#     if input_prompt:
-#         run_async_task()
-
-# with chat_column:
-#     empty_slot.text('')
-
 
 
