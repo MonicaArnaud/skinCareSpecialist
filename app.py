@@ -166,7 +166,9 @@ def find_related_documents(query):
     
     # Return the content of the top 3 related documents
     return [doc.page_content for doc, _ in docs_with_scores_and_content_texts]
-    
+
+def run_async_task(input_prompt):
+    asyncio.run(generate_response(input_prompt))
 # 新增结束
 
 # Function to generate response
@@ -175,7 +177,8 @@ async def generate_response():
     # Append user's query to history
     try:
         st.session_state.history.append({
-        "message": st.session_state.prompt,
+        # "message": st.session_state.prompt,
+        "message" : input_prompt,
         "is_user": True
     })
     
@@ -190,7 +193,8 @@ async def generate_response():
         messages = ensure_fit_tokens(messages)
 
     # Get related documents based on user input # 新增
-        related_documents = find_related_documents(st.session_state.prompt)
+        # related_documents = find_related_documents(st.session_state.prompt)
+        related_documents = find_related_documents(input_prompt)
 
         # Add related document messages to the chat
         doc_messages = [{"role": "assistant", "content": doc_text} for doc_text in related_documents]
@@ -295,9 +299,9 @@ def main():
               )
     if input_prompt:
         #新增
-        st.session_state.prompt = input_prompt
+        #st.session_state.prompt = input_prompt
         # 新增结束
-        run_async_task()
+        run_async_task(input_prompt)
 
 if __name__ == "__main__":
     main()
