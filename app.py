@@ -301,7 +301,7 @@ def main():
               )
     if input_prompt:
         #新增
-        st.session_state.prompt = input_prompt
+        # st.session_state.prompt = input_prompt
         # 新增结束
         run_async_task()
 
