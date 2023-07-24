@@ -198,6 +198,12 @@ async def generate_response():
         # related_documents = find_related_documents(st.session_state.prompt)
         related_documents = find_related_documents(input_prompt)
 
+        if not related_documents:
+            st.session_state.history.append({
+                "message": "我不知道",
+                "is_use": False })
+            return # Exit function here
+
         # Add related document messages to the chat
         doc_messages = [{"role": "assistant", "content": doc_text} for doc_text in related_documents]
         messages.extend(doc_messages)
