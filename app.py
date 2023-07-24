@@ -167,13 +167,15 @@ def find_related_documents(query):
     # Return the content of the top 3 related documents
     return [doc.page_content for doc, _ in docs_with_scores_and_content_texts]
 
-def run_async_task(input_prompt):
-    asyncio.run(generate_response(input_prompt))
+def run_async_task():
+    asyncio.run(generate_response())
 # 新增结束
 
 # Function to generate response
 #async def generate_response(): # new version adding the async
 async def generate_response():
+    input_prompt = st.session_state.prompt
+    
     # Append user's query to history
     try:
         st.session_state.history.append({
@@ -299,9 +301,9 @@ def main():
               )
     if input_prompt:
         #新增
-        #st.session_state.prompt = input_prompt
+        st.session_state.prompt = input_prompt
         # 新增结束
-        run_async_task(input_prompt)
+        run_async_task()
 
 if __name__ == "__main__":
     main()
