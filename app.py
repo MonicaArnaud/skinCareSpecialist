@@ -200,7 +200,7 @@ async def generate_response():
 
         # Add related document messages to the chat
         doc_messages = [{"role": "assistant", "content": doc_text} for doc_text in related_documents]
-        st.session_state["messages"].extend(doc_messages)
+        messages.extend(doc_messages)
     # 新增结束
     
 # # Call the Chat Completions API with the messages
