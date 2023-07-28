@@ -20,6 +20,7 @@ import streamlit.components.v1 as components
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+import sqlite3
 #import markdown
 
 
